@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  trello:
+    image: 'karlygaw/trello'
+    container_name: 'trello-container'
+    depends_on:
+      - db
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+    ports:
+      - 8081:8080
+
+  db:
+    image: 'postgres'
+    container_name: 'trello-db-container'
+    environment:
+      POSTGRES_DB: Trello
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "2345:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:

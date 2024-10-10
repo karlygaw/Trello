@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create/Edit Task</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5" th:text="${task.id == null ? 'Create Task' : 'Edit Task'}">Task Form</h1>
+
+    <form th:action="@{/tasks/save}" th:object="${task}" method="post" class="mt-4">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" th:field="*{title}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" th:field="*{description}" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="deadlineDate">Deadline</label>
+            <input type="date" id="deadlineDate" th:field="*{deadlineDate}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" th:field="*{status}" class="form-control">
+                <option value="0" th:selected="${task.status == 0}">Created</option>
+                <option value="1" th:selected="${task.status == 1}">In Progress</option>
+                <option value="2" th:selected="${task.status == 2}">Done</option>
+                <option value="3" th:selected="${task.status == 3}">Failed</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a th:href="@{/tasks}" class="btn btn-secondary">Back to list</a>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
